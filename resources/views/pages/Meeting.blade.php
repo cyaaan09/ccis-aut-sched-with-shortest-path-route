@@ -107,7 +107,7 @@ display: block;
                                     <td>{{ $meeting_time->duration }}</td>
                                    <!--  <td style="width: 12%;">Delete</td> -->
                                    <td>
-                                      <a href="/meetingtime/{{ $meeting_time->id }}" class="btn btn-block btn-info btn-xs">Delete</a>
+                                      <a href="/meetingtime/{{ $meeting_time->id }}" class="btn btn-block btn-danger btn-xs">Delete</a>
                                       </a>
                                   </td>
                                   </tr>

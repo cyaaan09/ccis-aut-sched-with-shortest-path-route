@@ -73,7 +73,6 @@
                                     <th>Course</th>
                                     <th>Section</th>
                                     <th>Max</th>
-                                    <th>Created</th>
                                   </tr>
                                 </thead>
                                 
@@ -84,7 +83,9 @@
                                     <td>{{ $section->CourseName }}</td>
                                     <td>{{ $section->SectionName }}</td>
                                     <td>{{ $section->MaxStudent }}</td>
-                                    <td>{{ $section->created_at }}</td>
+                                    <td>
+                                      <a href="section/{{ $section->SectonID  }}" class="btn btn-block btn-danger btn-xs">Delete</a>
+                                    </td>
                                   </tr>
                                   @endforeach
                                 </tbody>

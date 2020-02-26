@@ -86,7 +86,7 @@
                                   <td>{{ $subject->updated_at }}</td>
                                   <!-- <td>Delete</td> -->
                                   <td>
-                                    <a href="/subject/{{ $subject->id }}" class="btn btn-block btn-info btn-xs">Delete</a>
+                                    <a href="/subject/{{ $subject->id }}" class="btn btn-block btn-danger btn-xs">Delete</a>
                                   </a>
                                 </td>
                                 </tr>

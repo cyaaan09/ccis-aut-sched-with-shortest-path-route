@@ -15,11 +15,11 @@ class CreateCourseSectionsTable extends Migration
     {
         Schema::create('course_sections', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('course_id')->unsigned();
-            $table->foreign('course_id')->references('id')->on('courses');
+            $table->integer('course_id')->unsigned()->nullable();
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('set null');
             
-            $table->integer('section_id')->unsigned();
-            $table->foreign('section_id')->references('id')->on('sections');
+            $table->integer('section_id')->unsigned()->nullable();
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete('set null');
             $table->timestamps();
         });
     }

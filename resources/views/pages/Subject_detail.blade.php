@@ -91,7 +91,7 @@
                                   <td>{{ $sub_detail->duration }}</td>
                                   <!-- <td>Delete</td> -->
                                   <td>
-                                    <a href="" class="btn btn-block btn-info btn-xs">Delete</a>
+                                    <a href="/subjectdetail/{{ $sub_detail->id }}" class="btn btn-block btn-danger btn-xs">Delete</a>
                                   </a>
                                 </td>
                                 </tr>

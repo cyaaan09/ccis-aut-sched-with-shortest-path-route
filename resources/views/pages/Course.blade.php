@@ -69,7 +69,7 @@
                                     <td>{{ $course->created_at }}</td>
                                     <td>{{ $course->updated_at }}</td>
                                     <td>
-                                    <a href="/course/{{ $course->id }}" class="btn btn-block btn-info btn-xs">Delete</a>
+                                    <a href="/course/{{ $course->id }}" class="btn btn-block btn-danger btn-xs">Delete</a>
                                   </a>
                                 </td>
                                   </tr>

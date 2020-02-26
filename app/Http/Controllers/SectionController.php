@@ -28,9 +28,10 @@ class SectionController extends Controller
 
     	$Courses = Course::all();
     	$Sections= DB::table('sections')
-        			->join('courses', 'courses.id', '=', 'sections.course_id')
+        			->leftjoin('courses', 'courses.id', '=', 'sections.course_id')
         			->select('courses.name as CourseName', 'sections.id as SectonID', 'sections.name as SectionName', 'sections.max_num_of_students as MaxStudent','sections.created_at')
         			->get();
+        // dd($Sections);
     	return view('pages.Section')->with(["Courses" => $Courses,"Sections" => $Sections]);
     }
     public function new()
@@ -65,6 +66,7 @@ class SectionController extends Controller
 
     public function delete($id)
     {
-       
+       Section::where('id',$id)->delete();
+       return redirect('/section');
     }
 }

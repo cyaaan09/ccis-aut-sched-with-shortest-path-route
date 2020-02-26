@@ -74,6 +74,10 @@ display: block;
                                         <td>{{ $type->id }}</td>
                                         <td>{{ $type->name }}</td>
                                         <td>{{ $type->created_at }}</td>
+                                        <td>
+                                        <a href="/types/{{ $type->id }}" class="btn btn-block btn-danger btn-xs">Delete</a>
+                                        </a>
+                                    </td>
                                       </tr>
                                     @endforeach
                                 </tbody>

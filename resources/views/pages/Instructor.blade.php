@@ -16,9 +16,13 @@ display: block;
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
+          <div class="col-sm-12" style="display: inline-flex; justify-content: space-between;">
             <h1>INSTRUCTORS</h1>
+            <div>
+              <a href="/instructorsubject" class="btn btn-block btn-info">Assigned Subjects</a>
+            </div>
           </div>
+          
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -53,13 +57,13 @@ display: block;
                                
                                 <td>{{ $instructor->id }}</td>
                                 <td>{{ $instructor->name }}</td>
-                                <td>{{ $instructor->created_at }}</td>
-                                <td>{{ $instructor->updated_at }}</td>
+                                <td>{{ $instructor->created_at->toformattedDateString() }}</td>
+                                <td>{{ $instructor->updated_at->toformattedDateString() }}</td>
                                 <td>
                                     <a href="#" class="btn btn-block btn-info btn-xs" data-toggle="modal" data-target="#Details">Details</a>
                                   </a>
                                 <td>
-                                    <a href="/instructor/{{ $instructor->id }}" class="btn btn-block btn-info btn-xs">Delete</a>
+                                    <a href="/instructor/{{ $instructor->id }}" class="btn btn-block btn-danger btn-xs">Delete</a>
                                   </a>
                                 </td>
                               </tr>

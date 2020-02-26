@@ -2,6 +2,7 @@
 
 @section('content')
 @include('modal.instructorsubjectmodal')
+@include('modal.editmodal')
 <style type="text/css">
 .my-custom-scrollbar {
 position: relative;
@@ -16,8 +17,11 @@ display: block;
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>INSTRUCTOR SUBJECTS</h1>
+          <div class="col-sm-12" style="display: inline-flex; justify-content: space-between;">
+            <h1>ASSIGNED SUBJECTS</h1>
+            <div>
+              <a href="/instructor" class="btn btn-block btn-info">Instuctors</a>
+            </div>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -49,20 +53,50 @@ display: block;
                               </tr>
                             </thead>
                              @foreach($InstructorSubjects as $InstructorSubject)
+
+                             <?php
+                                $instructor_name = $InstructorSubject->instructor_name;
+                                
+                                if ($instructor_name == "") {
+                                  $instructor_name = "TBA";
+                                }
+                                $course_name = $InstructorSubject->course_name;
+
+                                if ($course_name == "") {
+                                  $course_name = "TBA";
+                                }
+                                $section_name = $InstructorSubject->section_name;
+
+                                if ($section_name == "") {
+                                  $section_name = "TBA";
+                                }
+                                $sub_name = $InstructorSubject->sub_name;
+                                $type_name = $InstructorSubject->type_name;
+                                if ($sub_name == "") {
+                                  $sub_name = "TBA";
+                                }
+                                if ($type_name == "") {
+                                  $type_name = "TBA";
+                                }
+                              ?>
                             <tbody>
                               <tr>
                                 
                                 <td>{{ $InstructorSubject->id }}</td>
-                                <td>{{ $InstructorSubject->instructor_name }}</td>
-                                <td>{{ $InstructorSubject->course_name }}</td>
-                                <td>{{ $InstructorSubject->section_name }}</td>
-                                <td>{{ $InstructorSubject->sub_name }} - {{ $InstructorSubject->type_name }}</td>
-                                <!-- <td>
-                                    <a href="#" class="btn btn-block btn-info btn-xs" data-toggle="modal" data-target="#Details">Details</a>
-                                  </td> -->
-                                <!-- <td>
-                                    <a href="/instructor/{{ $InstructorSubject->id }}" class="btn btn-block btn-info btn-xs">Delete</a>
-                                </td> -->
+                                
+                            
+                                <td>{{ $instructor_name }}</td>
+                                
+                                <td>{{ $course_name }}</td>
+                                <td>{{ $section_name }}</td>
+                                <td>{{ $sub_name }} - {{ $type_name }}</td>
+                                <td>
+                                    <a href="/instructorsubject/edit/{{ $InstructorSubject->id }}" class="btn btn-block btn-info btn-xs">Edit</a>
+                                    
+                                </td>
+                                <td>
+                                    <a href="/instructorsubject/{{ $InstructorSubject->id }}" class="btn btn-block btn-danger btn-xs">Delete</a>
+                                </td>
                               </tr>
                             </tbody>
                             @endforeach
@@ -75,4 +109,5 @@ display: block;
         </div>
       </div>
       <!-- /.card -->
+
 @endsection

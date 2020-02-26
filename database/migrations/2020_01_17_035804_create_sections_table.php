@@ -17,7 +17,7 @@ class CreateSectionsTable extends Migration
             $table->increments('id');
 
             $table->integer('course_id')->unsigned();
-            $table->foreign('course_id')->references('id')->on('courses');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             
             $table->string('name');
             $table->integer('max_num_of_students');

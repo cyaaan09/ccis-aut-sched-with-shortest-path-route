@@ -52,7 +52,12 @@ class InstructorSubjectController extends Controller
         					// dd($InstructorSubjects);
 
         $instructors = Instructor::all();
+        // $pluckedname = $InstructorSubjects->pluck('instructor_name');
+
+
         $courses = Course::all();
+        
+        // dd($courses);
         $sections = Section::all();
         // $subjects = Subject::all();
         $subjects = DB::table('subject_details')
@@ -61,7 +66,20 @@ class InstructorSubjectController extends Controller
         			->select('subjects.id as id', 'subject_details.id as sub_id', 'subjects.name as name', 'types.name as type_name')
         			->get();
        	$sub_select = Subject::all(); 
+        // foreach ($pluckedname as $nameee) {
+        //     if($pluckedname[$nameee] = "TBA")
+        //     $pluckedname == "TBA";
+    
+        // }
+        // foreach ($pluckedname as $key => $value) {
+        //     if ($value[$key] = "") {
+        //         $value = "TBA";
+        //     }
+        // }
+        
+        // dd($value);
         			// dd($subjects);
+        // dd($pluckedname);
 
         return view('pages.InstructorSubject', compact(['InstructorSubjects', 'instructors', 'courses', 'sections', 'subjects']));
         // return view('pages.InstructorSubject')->with('InstructorSubjects', $InstructorSubjects);
@@ -88,19 +106,51 @@ class InstructorSubjectController extends Controller
         return redirect('/instructorsubject');
     }
 
-    public function edit()
+    public function edit($id)
     {
-        return view('pages.InstructorSubject');
+        $instructorsubjects = DB::table('instructor_subjects')
+                            ->where('instructor_subjects.id',$id)
+                            ->leftjoin('instructors','instructor_subjects.instructor_id', '=', 'instructors.id')
+                            ->leftjoin('courses','instructor_subjects.course_id', '=', 'courses.id')
+                            ->leftjoin('sections','instructor_subjects.section_id', '=', 'sections.id')
+                            ->leftjoin('subject_details','instructor_subjects.subject_details_id', '=', 'subject_details.id')
+                            ->leftjoin('subjects', 'subject_details.subject_id', '=', 'subjects.id')
+                            ->leftjoin('types', 'subject_details.type_id', '=', 'types.id')
+                            ->select('instructors.name as instructor_name', 'instructor_subjects.id as id', 'sections.name as section_name', 'courses.name as course_name', 'subjects.name as subject_name', 'types.name as type_name', 'subjects.id as subject_id', 'instructors.id as instructor_id', 'sections.id as section_id', 'subject_details.id as subject_details_id', 'courses.id as course_id')
+                            ->get();
+        
+        // dd($instructorsubjects);
+        $instructors = Instructor::all();
+        $courses = Course::all();
+        $sections = Section::all();
+        $subjects = DB::table('subject_details')
+                    ->leftjoin('subjects', 'subjects.id', '=', 'subject_details.subject_id')
+                    ->leftjoin('types', 'types.id', '=', 'subject_details.type_id')
+                    ->select('subjects.id as id', 'subject_details.id as sub_id', 'subjects.name as name', 'types.name as type_name')
+                    ->get();
+        $instructorbyid = $id;
+        // dd($instructor_id);
+        return view('pages.edit', compact(['instructorsubjects', 'instructors', 'subjects', 'sections', 'courses', 'instructorbyid']));
     }
 
-    public function put()
+    public function put(Request $request)
     {
-        return view('pages.InstructorSubject');
+        $id = $request->input('id');
+        
+        $instructor = InstructorSubject::find($id);
+        // dd($instructor);
+        $instructor->course_id = $request->input('course');
+        $instructor->section_id = $request->input('section');
+        $instructor->instructor_id = $request->input('instructor');
+        $instructor->subject_details_id = $request->input('subject_detail');
+        $instructor->save();
+        return redirect('/instructorsubject');
     }
 
-    public function delete()
+    public function delete($id)
     {
-        return view('pages.InstructorSubject');
+        InstructorSubject::where('id',$id)->delete();
+        return redirect('/instructorsubject');
     }
 
     

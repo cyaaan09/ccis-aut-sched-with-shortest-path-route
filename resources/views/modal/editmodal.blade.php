@@ -1,9 +1,9 @@
 <!-- instructor subject -->
-<div class="modal fade" id="instructor_subject" tabindex="-1" role="dialog">
+<div class="modal fade" id="editmodal" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title content-header"  id="">ADD NEW</h2>
+        <h2 class="modal-title content-header"  id="">EDIT</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -52,7 +52,7 @@
             <button type="button" class="btn btn-primary">UPLOAD</button> -->
              <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">ADD</button>
+        <button type="submit" class="btn btn-primary">EDIT</button>
       </div>
         </form>
       </div>

@@ -58,6 +58,7 @@ class TypeController extends Controller
 
     public function delete($id)
     {
-       
+       Type::where('id', $id)->delete();
+       return redirect('/types');
     }
 }

@@ -103,7 +103,7 @@ display: block;
                                     <td>{{$room->created_at}}</td>
                                     <td>{{$room->updated_at}}</td>
                                     <td>
-                                        <a href="" class="btn btn-block btn-info btn-xs">Delete</a>
+                                        <a href="/room/{{ $room->room_id }}" class="btn btn-block btn-danger btn-xs">Delete</a>
                                         </a>
                                     </td>
                                   </tr>

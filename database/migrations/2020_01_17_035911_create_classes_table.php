@@ -16,17 +16,17 @@ class CreateClassesTable extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('course_id')->unsigned();
-            $table->foreign('course_id')->references('id')->on('courses');
+            $table->integer('course_id')->unsigned()->nullable();
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('set null');
 
-            $table->integer('section_id')->unsigned();
-            $table->foreign('section_id')->references('id')->on('sections');
+            $table->integer('section_id')->unsigned()->nullable();
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete('set null');
 
-            $table->integer('instructor_id')->unsigned();
-            $table->foreign('instructor_id')->references('id')->on('instructors');
+            $table->integer('instructor_id')->unsigned()->nullable();
+            $table->foreign('instructor_id')->references('id')->on('instructors')->onDelete('set null');
 
-            $table->integer('subject_details_id')->unsigned();
-            $table->foreign('subject_details_id')->references('id')->on('subject_details');
+            $table->integer('subject_details_id')->unsigned()->nullable();
+            $table->foreign('subject_details_id')->references('id')->on('subject_details')->onDelete('set null');
 
 
             $table->timestamps();

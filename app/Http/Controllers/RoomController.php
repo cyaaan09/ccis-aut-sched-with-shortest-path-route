@@ -67,9 +67,10 @@ class RoomController extends Controller
         return view('pages.Room');
     }
 
-    public function delete()
+    public function delete($id)
     {
-        return view('pages.Room');
+        Room::where('id', $id)->delete();
+        return redirect('/room');
     }
 
     

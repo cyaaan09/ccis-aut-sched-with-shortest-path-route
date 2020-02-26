@@ -64,9 +64,9 @@ class SubjectDetailController extends Controller
         return redirect('/subjectdetail');
     }
 
-    public function edit()
+    public function edit($id)
     {
-        return view('pages.Instructor');
+        
     }
 
     public function put()
@@ -76,7 +76,7 @@ class SubjectDetailController extends Controller
 
      public function delete($id)
     {
-        Instructor::where('id',$id)->delete();
-        return redirect('/instructor');
+        SubjectDetail::where('id',$id)->delete();
+        return redirect('/subjectdetail');
     }
 }

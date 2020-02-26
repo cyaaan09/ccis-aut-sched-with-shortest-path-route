@@ -17,10 +17,10 @@ class CreateSubjectDetailsTable extends Migration
             $table->increments('id');
 
             $table->integer('subject_id')->unsigned();
-            $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
 
             $table->integer('type_id')->unsigned();
-            $table->foreign('type_id')->references('id')->on('types');
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
 
             // $table->string('type_id');
             $table->float('duration');
