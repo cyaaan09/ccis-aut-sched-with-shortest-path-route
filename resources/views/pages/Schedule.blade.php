@@ -24,24 +24,34 @@
                           <thead>
                             <tr>
                               <th>ID #</th>
+                              <th>(Section, capacity)</th>
                               <th>Instructors</th>
                               <th>Subjects</th>
-                              <th>Rooms</th>
-                              <th>Types of rooms</th>
+                              <th>Rooms (Type, capacity)</th>
                               <th>Time</th>
-                              <th>Date</th>
+                              <th>Day</th>
                             </tr>
                           </thead>
                           <tbody>
+                            @foreach($schedules as $schedule)
                             <tr>
-                              <td>19-202</td>
-                              <td>John Rosales</td>
-                              <td>IT</td>
-                              <td>Annex 101 </td>
-                              <td>Lab</td>
-                              <td>3:30pm - 4:30pm</td>
-                              <td>Mon - TH</td>
+                              <td>{{ $schedule->id }}</td>
+                              <td>({{ $schedule->section->name }}, {{ $schedule->section->max_num_of_students  }})</td>
+                              <td>{{ $schedule->instructor->name }}</td>
+                              <td>{{ $schedule->subject->name}}</td>
+                              <?php
+                              if($schedule->room == null) {
+                                $room = "( " . $schedule->room_type->name . ", ? )";
+                              }
+                              else {
+                                $room = $schedule->room->id . " ( " . $schedule->room->seating_capacity . ", " . $schedule->room_type->name . " )";
+                              }
+                              ?>
+                              <td>{{ $room }} </td>
+                              <td>{{ $schedule->meeting_time->start }} - {{ $schedule->meeting_time->end }}</td>
+                              <td>{{ $schedule->meeting_time->day}}</td>
                             </tr>
+                            @endforeach()
                           </tbody>
                         </table>
                       </div>

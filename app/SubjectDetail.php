@@ -13,7 +13,7 @@ class SubjectDetail extends Model
 
     public function room_type()
     {
-        return $this->belongsTo('App\Type');
+        return $this->belongsTo('App\Type', 'type_id');
     }
 
     public function courses()

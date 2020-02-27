@@ -3,6 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use App\Room;
+use App\Type;
+use App\MeetingTime;
+use App\Instructor;
+use App\Course;
+use App\Section;
+use App\SubjectDetail;
+use App\InstructorSubject;
+use App\CourseSection;
+use App\Subject;
+use App\Schedule;
+use Illuminate\Support\Facades\DB;
 
 class ScheduleController extends Controller
 {
@@ -13,7 +27,7 @@ class ScheduleController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -23,7 +37,9 @@ class ScheduleController extends Controller
      */
     public function get()
     {
-        return view('pages.Schedule');
+        $schedules = Schedule::with(['instructor', 'course', 'section', 'subject', 'room_type', 'room', 'meeting_time'])->get();
+
+        return view('pages.Schedule', compact(['schedules']));
     }
     public function new()
     {
@@ -37,7 +53,59 @@ class ScheduleController extends Controller
 
     public function post()
     {
-        return view('pages.Schedule');
+        // pull required data from db
+        $room = json_encode(Room::all());
+        $types = json_encode(Type::all());
+        $meeting_times = json_encode(MeetingTime::all());
+        $instructors = json_encode(Instructor::all());
+        $courses = json_encode(Course::all());
+        $sections = json_encode(Section::all());
+        $subjects = json_encode(Subject::all());
+        $subject_details = json_encode(SubjectDetail::all());
+        $instructor_subjects = json_encode(InstructorSubject::all());
+        $course_section = json_encode(CourseSection::all());
+
+        // if these data are ready for genetic algo:
+        $process = new Process(['python', storage_path("app/python/genetic_algorithm.py"), 
+            $room, 
+            $types, 
+            $meeting_times, 
+            $instructors, 
+            $courses, 
+            $sections, 
+            $subjects, 
+            $subject_details, 
+            $instructor_subjects, 
+            $course_section
+        ]);
+        $process->setTimeout(0);
+        $process->run();
+
+        // executes after the command finishes
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        $string_result = $process->getOutput();
+        $result = json_decode($string_result);
+
+        foreach($result as $key => $t) {
+            $schedule = new Schedule;
+            $schedule->course_id = $t[0]->course_id;
+            $schedule->section_id = $t[0]->section_id;
+            $schedule->subject_id = $t[0]->subject_id;
+            $schedule->room_id = $t[0]->room_id;
+            $schedule->type_id = $t[0]->type_id;
+            $schedule->instructor_id = $t[0]->instructor_id;
+            $schedule->meeting_time_id = $t[0]->meeting_time_id;
+            $schedule->save();
+
+        }
+        return response()->json([
+            'status' => true,
+            'redirect' => url('/schedule')
+        ]);
+        // if they are not ready, then produce error and redirect back       
     }
 
     public function edit()
