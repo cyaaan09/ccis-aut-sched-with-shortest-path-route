@@ -14,6 +14,11 @@ class TypesTableSeeder extends Seeder
     public function run()
     {
         DB::table('types')->insert([
+            [
+                'name' => 'INITIAL',
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            ],
         	[
         		'name' => 'LAB',
                 'created_at' => \Carbon\Carbon::now(),

@@ -12,6 +12,7 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        'url' => '/schedule/post'
+        '/schedule/post',
+        '/schedule/update'
     ];
 }

@@ -15,7 +15,9 @@ use App\SubjectDetail;
 use App\InstructorSubject;
 use App\CourseSection;
 use App\Subject;
+use App\Distance;
 use App\Schedule;
+use App\RoomSchedule;
 use Illuminate\Support\Facades\DB;
 
 class ScheduleController extends Controller
@@ -41,6 +43,59 @@ class ScheduleController extends Controller
 
         return view('pages.Schedule', compact(['schedules']));
     }
+
+    public function update_schedule()
+    {
+        // pull required data from db
+        $rooms = json_encode(Room::all());
+        $types = json_encode(Type::all());
+        $scheds = json_encode(Schedule::all());
+        $distances = json_encode(Distance::all());
+        $meeting_times = json_encode(MeetingTime::all());
+        $room_schedules = RoomSchedule::with('schedule')->get();
+
+        $r_s = [];
+        foreach($room_schedules as $room_schedule) {
+            $r_s[] = [
+                'room_id' => $room_schedule->room_id,
+                'meeting_time_id' => $room_schedule->schedule->meeting_time_id
+            ];
+        }
+        $r_s = json_encode($r_s);
+
+        // if these data are ready for genetic algo:
+        $process = new Process(['python', storage_path("app/python/bf.py"), 
+            $rooms, 
+            $types, 
+            $scheds, 
+            $distances, 
+            $meeting_times,
+            $r_s,     
+        ]);
+        $process->setTimeout(0);
+        $process->run();
+
+        // executes after the command finishes
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        $string_result = $process->getOutput();
+        $result = json_decode($string_result);
+
+        foreach($result as $key => $t) {
+            $schedule = Schedule::find($t->schedule_id);
+            $schedule->room_id = $t->room_id;
+            $room_meeting_time = new RoomSchedule;
+            $room_meeting_time->room_id = $t->room_id;
+            $room_meeting_time->schedule_id = $t->schedule_id;
+            $room_meeting_time->save();
+            $schedule->save();
+        }
+
+        return redirect()->back();
+    }
+
     public function new()
     {
         return view('pages.Schedule');

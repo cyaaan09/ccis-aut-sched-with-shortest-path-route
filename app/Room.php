@@ -10,4 +10,9 @@ class Room extends Model
     {
         return $this->belongsTo('App\Type', 'type_id');
     }
+
+    public function distances()
+    {
+        return $this->hasMany('App\Distance', 'from_room_id');
+    }
 }

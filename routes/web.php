@@ -36,6 +36,7 @@ Route::get('/subject/{id}', 'SubjectController@delete')->name('subject.delete');
 
 Route::get('/schedule', 'ScheduleController@get')->name('schedule');
 Route::POST('/schedule/post', 'ScheduleController@post')->name('schedule.post');
+Route::POST('/schedule/update', 'ScheduleController@update_schedule');
 
 Route::get('/room', 'RoomController@get')->name('room');
 Route::POST('/room', 'RoomController@post')->name('room.post');
