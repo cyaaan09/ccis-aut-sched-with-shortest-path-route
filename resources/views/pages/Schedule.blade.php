@@ -57,15 +57,17 @@
                       </div>
                       <!-- /.card-body -->
                 </div>
+                @if($day != null)
                 <div class="row card-footer">
                   <div class="col-sm-2">
                     <form id="update_schedule" method="post" action="/schedule/update">
                       {{ csrf_field() }}
-                      <input type="hidden" name="day" value="Mon">
+                      <input type="hidden" name="day" value="{{ $day }}">
                       <button type="submit" class="btn btn-block btn-info btn-sm">Bellman</button>
                     </form>
                   </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>

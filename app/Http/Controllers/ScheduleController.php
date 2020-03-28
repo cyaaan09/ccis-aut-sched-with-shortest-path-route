@@ -41,18 +41,29 @@ class ScheduleController extends Controller
     {
         $schedules = Schedule::with(['instructor', 'course', 'section', 'subject', 'room_type', 'room', 'meeting_time'])->get();
 
-        return view('pages.Schedule', compact(['schedules']));
+        $day = "";
+
+        foreach($schedules as $schedule) {
+            if( ! isset($schedule->room)) {
+                // get the day
+                $day = $schedule->meeting_time->day;
+            }
+        }
+
+        return view('pages.Schedule', compact(['schedules', 'day']));
     }
 
-    public function update_schedule()
+    public function update_schedule(Request $request)
     {
         // pull required data from db
+        $day = [];
         $rooms = json_encode(Room::all());
         $types = json_encode(Type::all());
         $scheds = json_encode(Schedule::all());
         $distances = json_encode(Distance::all());
         $meeting_times = json_encode(MeetingTime::all());
         $room_schedules = RoomSchedule::with('schedule')->get();
+        $day = json_encode(['day' => $request->input('day')]);
 
         $r_s = [];
         foreach($room_schedules as $room_schedule) {
@@ -70,7 +81,8 @@ class ScheduleController extends Controller
             $scheds, 
             $distances, 
             $meeting_times,
-            $r_s,     
+            $r_s,
+            $day
         ]);
         $process->setTimeout(0);
         $process->run();
@@ -82,7 +94,7 @@ class ScheduleController extends Controller
 
         $string_result = $process->getOutput();
         $result = json_decode($string_result);
-
+        // var_dump($result); die();
         foreach($result as $key => $t) {
             $schedule = Schedule::find($t->schedule_id);
             $schedule->room_id = $t->room_id;
