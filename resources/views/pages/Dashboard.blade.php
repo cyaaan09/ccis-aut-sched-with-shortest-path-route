@@ -20,9 +20,7 @@
       </div><!-- /.container-fluid -->
     </section>
     <br><br><br>
-<<<<<<< HEAD
-    
-=======
+
     <div id="loading" hidden>
       <h1 class="text-center" style="font-weight: 700;
       font-family: system-ui">
@@ -42,7 +40,7 @@
       <h3 class="text-center" style="color: #007bff">53 %</h3>
     </div>
     @if($schedules->isEmpty())
->>>>>>> e68accab9c1d9bfbd046f2b7b8936dd157a8cd8b
+
     <div id="generate">
       <h5 class="text-center">Click Here</h5>
       <p class="text-center">
@@ -76,9 +74,7 @@
     @endif
     <br><br>
 
-<<<<<<< HEAD
 
-=======
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
@@ -111,6 +107,6 @@ $(document).ready(function(){
   });
 });
 </script>
->>>>>>> e68accab9c1d9bfbd046f2b7b8936dd157a8cd8b
+
     
 @endsection

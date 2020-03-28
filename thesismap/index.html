@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Map Sample</title>
+	<style type="text/css">
+		#map{
+			height: 600px;
+			width: 100%;
+		}
+		#contentSize{
+			height: 100px;
+			width: 300px;
+			font-size: 20px;
+			font-weight: bold;
+			text-align: center;
+			padding-top: 30px;
+		}
+	</style>
+	<script type="text/javascript" src="barangay.js"></script>
+	<script type="text/javascript" src="blocks.js"></script>
+
+</head>
+<body>
+<h1>MY GOOGLE MAP</h1>
+<div id="map"></div>
+<script type="text/javascript">
+	function initMap(){
+		var options = {
+			zoom:17,
+			center:{lat:8.9457, lng:125.5418}
+		}
+
+		var map = new google.maps.Map(document.getElementById('map'), options);
+
+		// var marker = new google.maps.Marker({
+		// 	position:{lat:8.9498, lng:125.5424},
+		// 	map:map
+		// });
+
+		// var infoWindow = new google.maps.InfoWindow({
+		// 	content: '<h1>Humabon Butuan City</h1>'
+		// });
+
+		// marker.addListener('click', function(){
+		// 	infoWindow.open(map, marker);
+		// })
+
+
+		// addMarker({lat:8.9498, lng:125.5424})
+		// addMarker({lat:8.9488, lng:125.5422})
+		// addMarker({lat:8.9480, lng:125.5442})
+		// addMarker({lat:8.9451, lng:125.5442})
+		// addMarker({lat:8.9440, lng:125.5442})
+		// addMarker({lat:8.9457, lng:125.5418})
+		// addMarker({lat:8.9468, lng:125.5394})
+		// addMarker({lat:8.9461, lng:125.5353})
+		// addMarker({lat:8.9440, lng:125.5364})
+		// addMarker({lat:8.9468, lng:125.5449})
+		// addMarker({lat:8.948916, lng:125.540782})
+
+		makePolygon(Humabon,Humabon)
+		makePolygon(Sikatuna,Sikatuna)
+		makePolygon(Urduja)
+		makePolygon(Silongan)
+		makePolygon(RajahSoliman)
+		makePolygon(Agao)
+		makePolygon(DiegoSilang)
+		makePolygon(NewSocietyVillage)
+		makePolygon(LapuLapu)
+		makePolygon(Dagohoy)
+
+		makeBlock(block1,position1,block1)
+		
+
+
+		//add marker function
+		function addMarker(coordinates){
+			var marker = new google.maps.Marker({
+			position:coordinates,
+			map:map
+			})
+			// 	var infoWindow = new google.maps.InfoWindow({
+			// 	content: '<h1>Humabon Butuan City</h1>'
+			// });
+
+			// 	marker.addListener('click', function(){
+			// 	infoWindow.open(map, marker);
+			// })
+
+		}
+
+		//make a polygon function
+		function makePolygon(paths,name) {
+			var polygon = new google.maps.Polygon({
+				paths: paths,
+				strokeColor:'red',
+				strokeOpacity: 0.1,
+				strokeWeight: 3,
+				fillColor: 'red',
+				fillOpacity: 0.1
+			});
+			polygon.setMap(map);
+
+			
+		}
+
+		function makeBlock(paths, position,name){
+			var block = new google.maps.Polygon({
+				paths:paths,
+				strokeColor:'green',
+				strokeOpacity:0.5,
+				fillColor:'green',
+				fillOpacity:0.1
+			});
+			block.setMap(map);
+
+			var infowindow = new google.maps.InfoWindow();
+			
+
+			google.maps.event.addListener(block,'click', function() {
+			
+			if (name == block1) {
+				var contentString = '<div id = "contentSize">next year na mo graduate</div>';
+				
+				infowindow.setContent(contentString);
+				infowindow.setPosition({lat:8.950028, lng:125.542181});
+			}
+			// if (name == block2) {
+			// 	var contentString = "this year na mo graduate";
+				
+			// 	infowindow.setContent(contentString);
+			// 	infowindow.setPosition({lat:8.9488, lng:125.5422});
+			// }
+			
+			infowindow.open(map);
+			}); 
+		}
+	}
+</script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBY3GZ2fHavousWljcj6X6JboicJFSPnds&callback=initMap"
+    async defer></script>
+</body>
+</html>
